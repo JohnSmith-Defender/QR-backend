@@ -7,6 +7,11 @@ app.use(cors());
 
 let saveMap = new Map();
 
+const reset = (req, res) => {
+    saveMap.clear();
+    res.json({ ok: "true", message: "Reset Success!" })
+}
+
 const getdata = async (unicode, res) => {
     if (!unicode) return;
     const apiKey = "AIzaSyDfp2_dl03fuS3s7Zzyo9p1FwIXxsj5Kf4";
@@ -71,5 +76,7 @@ const requestHandle = async (req, res) => {
 }
 
 app.get('/read', requestHandle);
+
+app.post('/reset', reset);
 
 app.listen(5000, () => console.log("Server is listening at 5000!"));
