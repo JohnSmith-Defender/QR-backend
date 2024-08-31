@@ -1,6 +1,9 @@
 const express = require("express");
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors());
 
 let saveMap = new Map();
 const delayTime = 10 * 1000; // Delay time in milliseconds (10 seconds)
