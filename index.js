@@ -6,7 +6,6 @@ const app = express();
 app.use(cors());
 
 let saveMap = new Map();
-const delayTime = 10 * 1000; // Delay time in milliseconds (10 seconds)
 
 const getdata = async (unicode, res) => {
     if (!unicode) return;
@@ -60,15 +59,14 @@ const requestHandle = async (req, res) => {
         return;
     }
 
-    const currentTime = Date.now();
-    const lastRequestTime = saveMap.get(UNICODE);
+    const scanned = saveMap.get(UNICODE);
 
-    if (lastRequestTime && (currentTime - lastRequestTime < delayTime)) {
-        res.json({ ok: false, message: "Rate limit exceeded. Try again later." });
+    if (scanned) {
+        res.json({ ok: false, message: "Already Scanned." });
         return;
     }
 
-    saveMap.set(UNICODE, currentTime);
+    saveMap.set(UNICODE, true);
     await getdata(UNICODE, res);
 }
 
